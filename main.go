@@ -42,6 +42,9 @@ func init() {
 	flag.StringVar(&proxyAddress, "proxy-address", "127.0.0.1:4747", "Proxy listen address, e.g., 127.0.0.1:4747")
 	flag.StringVar(&subnet, "subnet", "", "IPv6 subnet, e.g., 4747:4747:4747:4747::/64")
 	flag.Parse()
+	if subnet == "" {
+		log.Fatalf("Subnet is required")
+	}
 }
 func getRandomIPFromSubnet(subnet string) (string, error) {
 	subnetParts := strings.Split(subnet, "/")
