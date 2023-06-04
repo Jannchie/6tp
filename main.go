@@ -39,7 +39,7 @@ func (t *transportPool) put(transport *http.Transport) {
 }
 
 func init() {
-	flag.StringVar(&proxyAddress, "proxy-address", "", "Proxy listen address, e.g., 127.0.0.1:4747")
+	flag.StringVar(&proxyAddress, "proxy-address", "127.0.0.1:4747", "Proxy listen address, e.g., 127.0.0.1:4747")
 	flag.StringVar(&subnet, "subnet", "", "IPv6 subnet, e.g., 4747:4747:4747:4747::/64")
 	flag.Parse()
 }
@@ -119,6 +119,7 @@ func main() {
 		handleRequestAndRedirect(res, req, transport)
 	})
 
+	log.Printf("Starting proxy server on %s", proxyAddress)
 	if err := http.ListenAndServe(proxyAddress, nil); err != nil {
 		log.Fatalf("Error starting proxy server: %v", err)
 	}
